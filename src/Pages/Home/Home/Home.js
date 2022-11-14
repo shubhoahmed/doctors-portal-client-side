@@ -4,6 +4,7 @@ import Exception from '../Exception/Exception';
 import InfoCards from '../InfoCard/InfoCards';
 import MakeAppoinment from '../MakeAppoinment/MakeAppoinment';
 import Services from '../Services/Services';
+import Testimonial from '../Testimonial/Testimonial';
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
             <Services></Services>
             <Exception></Exception>
             <MakeAppoinment></MakeAppoinment>
+            <Testimonial></Testimonial>
         </div>
     );
 };

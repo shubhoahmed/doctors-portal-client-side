@@ -3,7 +3,7 @@ import treatment from '../../../assets/images/treatment.png'
 
 const Exception = () => {
     return (
-        <div className="hero mt-5">
+        <div className="hero my-10">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div>
                     <h1 className="text-5xl font-bold text-neutral">Exceptional Dental Care, on Your Terms</h1>
