@@ -13,7 +13,7 @@ const ObtainableSlot = ({ emptySlot, setTreatment }) => {
                     <label
                         disabled={slots.length === 0}
                         htmlFor="booking-modal"
-                        className="btn btn-primary  text-white"
+                        className="btn btn-primary  text-white "
                         onClick={() => setTreatment(emptySlot)}>
 
                         Book Appoinment</label>
