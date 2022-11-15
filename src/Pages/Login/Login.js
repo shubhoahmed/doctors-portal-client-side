@@ -1,16 +1,27 @@
-
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { signIn } = useContext(AuthContext);
+
     const handleLogin = data => {
         console.log(data)
+        signIn(data.email, data.password)
+
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(error => console.log(error));
+
     }
     return (
         <div className='h-[800px] flex justify-center items-center text-neutral'>
             <div className='w-96 p-7'>
-                <h2 className='text-4xl '>Login</h2>
+                <h2 className='text-4xl text-center '>Login</h2>
 
                 <form onSubmit={handleSubmit(handleLogin)}>
 
@@ -36,7 +47,7 @@ const Login = () => {
 
                     <input className='btn w-full' type="submit" value='Login' />
                 </form>
-                <p className='my-2'>New to Doctors Portal <Link to='signup'><span className='text-primary'>Create an Account</span></Link></p>
+                <p className='my-2'>New to Doctors Portal <Link to='/signup'><span className='text-primary'>Create an Account</span></Link></p>
 
                 <div className="divider">OR</div>
                 <button className='btn btn-outline w-full bg-red-400'>CONTINUE WITH GOOGLE</button>
