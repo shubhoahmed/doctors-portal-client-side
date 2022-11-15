@@ -18,12 +18,19 @@ const ObtainableAppoinment = ({ selectedDate }) => {
                 {
                     appoinmentSlot.map(slot => <ObtainableSlot
                         key={slot._id}
-                        slot={slot}
+                        emptySlot={slot}
                         setTreatment={setTreatment}
                     />)
                 }
             </div>
-            <BookingModal></BookingModal>
+
+            {
+                treatment &&
+                <BookingModal
+                    selectedDate={selectedDate}
+                    treatment={treatment}
+                    setTreatment={setTreatment}
+                />}
         </section>
     );
 };
