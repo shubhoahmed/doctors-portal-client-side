@@ -1,9 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import footer from '../../../assets/images/footer.png'
 
 const Footer = () => {
     return (
-        <section className='mt-10'>
+        <section className='mt-10' style={
+            {
+                background: `url(${footer})`,
+                backgroundSize: `cover`
+            }
+        } >
             <footer className="footer p-10  text-neutral">
                 <div>
                     <span className="footer-title">Services</span>
