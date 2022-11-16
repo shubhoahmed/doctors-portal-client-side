@@ -11,8 +11,7 @@ const Header = () => {
         <li><Link to='/appoinment'>Appointment</Link></li>
         <li><Link to='/reviews'>Reviews</Link></li>
         <li><Link to='/contacts'>Contacts</Link></li>
-        {user?.uid ?
-            <li><Link to='/login'>SignOut </Link></li>
+        {user?.uid ? <li><Link to='/login'>SignOut </Link></li>
             : <li><Link to='/login'>Login </Link></li>}
     </>
 
