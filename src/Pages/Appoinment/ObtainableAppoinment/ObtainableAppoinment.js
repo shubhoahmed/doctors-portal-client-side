@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 import ObtainableSlot from './ObtainableSlot';
 import BookingModal from '../BookingModal/BookingModal';
+import { useQuery } from '@tanstack/react-query'
 
 const ObtainableAppoinment = ({ selectedDate }) => {
-    const [appoinmentSlot, setAppoinmentSlot] = useState([]);
     const [treatment, setTreatment] = useState(null);
-    useEffect(() => {
-        fetch(`appoinmentSlot.json`)
+
+    const { data: appoinmentSlot = [] } = useQuery({
+        queryKey: ['appoinmentSlot'],
+        queryFn: () => fetch(`http://localhost:5000/appoinmentSlot`)
             .then(res => res.json())
-            .then(data => setAppoinmentSlot(data));
-    }, [])
+    })
+
     return (
         <section className='mt-10'>
             <p className='text-center font-bold text-secondary my-8'>Available Appointments on :{format(selectedDate, 'PP')}</p>
