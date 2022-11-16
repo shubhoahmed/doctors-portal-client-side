@@ -1,22 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../context/AuthProvider';
+import toast from 'react-hot-toast';
 
 
 const Signup = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser } = useContext(AuthContext);
+    const { register, handleSubmit } = useForm();
+    const { createUser, updateUser } = useContext(AuthContext);
+    const [signupError, setSignupError] = useState('');
 
     const handleSignUp = data => {
         console.log(data)
+        setSignupError('');
 
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
+
+                toast('Create user successful.');
+
+                const userInfo = {
+                    displayName: data.name
+                };
+
+                updateUser(userInfo)
+                    .then(() => { })
+                    .catch(err => console.log(err));
+
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error)
+                setSignupError(error.message);
+            });
 
     }
     return (
@@ -45,8 +62,10 @@ const Signup = () => {
 
                         <input type="password"  {...register("password", { required: 'Password is required', minLength: { value: 6, message: 'length should be 6 character.' } })} className="input input-bordered w-full" />
                     </div>
-
                     <input className='btn w-full' type="submit" value='SignUp' />
+                    {
+                        signupError && <p className='text-red-500'>{signupError}</p>
+                    }
                 </form>
                 <p className='my-2'>Already have an account? <Link to='/login'><span className='text-primary'>Please login</span></Link></p>
 
