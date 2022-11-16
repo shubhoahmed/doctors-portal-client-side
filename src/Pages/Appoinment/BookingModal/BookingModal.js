@@ -1,9 +1,13 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../../context/AuthProvider';
 
 const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
     const { name, slots } = treatment;
     const date = format(selectedDate, 'PP');
+
+    const { user } = useContext(AuthContext);
 
     const handleBooking = event => {
         event.preventDefault();
@@ -22,8 +26,22 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
             phone,
             slot
         }
-        setTreatment(null);
-        console.log(booking);
+
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setTreatment(null);
+                toast.success('Booking Confirmed')
+            })
+
+
+
     }
 
     return (
@@ -45,8 +63,8 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
 
                             }
                         </select>
-                        <input name='name' type="text" placeholder="Your Name" className="input w-full " required />
-                        <input name='email' type="email" placeholder="Your Email" className="input w-full " required />
+                        <input name='name' type="text" defaultValue={user?.displayName} disabled placeholder="Your Name" className="input w-full disabled:bg-gray-200 " required />
+                        <input name='email' type="email" defaultValue={user?.email} disabled placeholder="Your Email" className="input w-full disabled:bg-gray-200 " required />
                         <input name='phone' type="text" placeholder="Your Number" className="input w-full " required />
                         <br />
                         <input type="submit" value="Submit" className="btn btn-success text-white text-center w-full " />
