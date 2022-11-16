@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthProvider';
@@ -6,16 +6,21 @@ import { AuthContext } from '../../context/AuthProvider';
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { signIn } = useContext(AuthContext);
+    const [loginError, setLoginError] = useState('');
 
     const handleLogin = data => {
         console.log(data)
+        setLoginError('');
         signIn(data.email, data.password)
 
             .then(result => {
                 const user = result.user
                 console.log(user)
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error.message)
+                setLoginError(error.message);
+            });
 
     }
     return (
@@ -46,6 +51,11 @@ const Login = () => {
                     <label className="label"> <span className="label-text"> Forget Password? </span></label>
 
                     <input className='btn w-full' type="submit" value='Login' />
+                    <div>
+                        {
+                            loginError && <p>{loginError} </p>
+                        }
+                    </div>
                 </form>
                 <p className='my-2'>New to Doctors Portal <Link to='/signup'><span className='text-primary'>Create an Account</span></Link></p>
 
